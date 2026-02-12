@@ -42,144 +42,69 @@ console.log("API DATA:", data);
         LOBUY
     </h1>
 
-      <div className='md:h-[500px] rounded flex items-center justify-center overflow-hidden z-10'>
-      
-       
+     <div className="relative z-10 w-full px-4 overflow-hidden">
+          <div className="w-full overflow-x-auto scroll-smooth hide-scrollbar snap-x snap-mandatory">
+            <div className="flex w-max gap-6 md:gap-12 py-10 animate-slide hover:[animation-play-state:paused]">
+              
+              {isLoading && (
+                <div className="flex gap-6">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="w-44 md:w-64 h-72 bg-gray-800 animate-pulse rounded-2xl" />
+                  ))}
+                </div>
+              )}
 
-          
+              {!isLoading && sliderProducts.map((product, index) => (
+                <div
+                  key={index}
+                  className="group relative h-72 w-48 md:h-96 md:w-64 p-4 rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-white/10 text-white cursor-pointer transition-all duration-300 hover:bg-gray-800 snap-center"
+                >
+                  {/* Stock Tag */}
+                  <div className="absolute top-3 left-3 z-20 bg-[#5c3c2d] text-[10px] md:text-xs text-[#f0c590] px-2 py-1 rounded-full uppercase font-bold">
+                    Limited to {product.stock}
+                  </div>
 
-      
+                  <Link to={`/product/${product._id}`} className="block h-full flex flex-col">
+                    {/* Image Container */}
+                    <div className="flex-1 flex items-center justify-center p-4">
+                      <img
+                        src={product.images?.[0]?.url}
+                        alt={product.name}
+                        className="max-w-60 max-h-40 md:max-h-56 object-contain group-hover:scale-110 transition-transform duration-500 ease-out"
+                      />
+                    </div>
 
-<div className="w-full overflow-x-auto  scroll-smooth snap-x snap-mandatory touch-auto hide-scrollbar">
-  <div className="flex w-max md:gap-28 mt-20 mb-6  md:mt-40 gap-14 animate-slide hover:[animation-play-state:paused]">
-
-     {isLoading && (
-      <p className="text-white px-10">Loading products...</p>
-    )}
-    {/* Original + duplicate cards */}
-    {!isLoading &&
-      sliderProducts.map((product, index) => (
-       
-
-
-
-
-
-       
-          <div
-          key={index}
-          className={`group relative md:h-80 h-60 w-44 md:w-60 p-3 rounded-2xl overflow-hidden text-white cursor-pointer transition-transform duration-300 ease-in-out
-            ${index % 2 === 0 ? "bg-gray-950" : "bg-gray-950"}`}
-        >
-
-           <div className="absolute   bg-[#5c3c2d] text-xs text-[#f0c590] px-3 py-1 rounded-full uppercase font-semibold">
-           Limited to {product.stock} pieces
-           </div>
-            <Link to={`/product/${product._id}`} >  
-         <div className="mt-12 flex items-center justify-center">
-        <img
-         src={product.images?.[0]?.url}
-         alt="Watch"
-           className="md:w-44 w-24  md:h-36  h-28 group-hover:scale-125 group-focus:scale-125 transition-transform duration-500 ease-in-out "
-        />
-     </div>
-     </Link>
-           <div className="absolute mt-8  ">
-    <p className="text-xs md:text-sm font-semibold"> {product.name}</p>
-    <p className="text-xs md:text-sm font-semibold"> ₹{product.price}</p>
-    
-  </div>
-         
+                    {/* Info Container - Removed absolute to prevent overlap */}
+                    <div className="mt-2 space-y-1">
+                      <p className="text-sm md:text-lg font-medium truncate">
+                        {product.name}
+                      </p>
+                      <p className="text-blue-400 font-bold text-lg">
+                        ₹{product.price.toLocaleString()}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
-      
-     
-    ))}
-  </div>
-</div>
-
-
-       
-      </div>
       
     </div>
-   <div className='pt-4 md:pt-10 px-4 md:px-36 h-auto'>
-  <h1 className='text-3xl font-normal p-4 md:p-10'>POPULAR BRAND</h1>
-
- 
-
-
-
-
-
-
-  <div className='flex flex-col gap-4'>
-
-    <div className='flex lg:gap-16 gap-2 overflow-x-auto xl:overflow-visible whitespace-nowrap'>
-      <div className='min-w-[12rem] h-12 p-4 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        UBLOTE
+  <div className="py-10 px-6 md:px-36">
+        <h2 className="text-2xl md:text-3xl font-poppins mb-8">POPULAR BRAND</h2>
+        <div className="flex flex-col gap-4">
+          {[1, 2].map((row) => (
+            <div key={row} className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+              {["ROLEX", "G-SHOCK", "HUBLOT", "KDM", "POPUP", "TIOX"].map((brand) => (
+                <div key={brand} className="min-w-[140px] md:flex-1 h-12 flex items-center justify-center bg-slate-200 hover:bg-blue-500 hover:text-white transition-colors cursor-pointer rounded-lg font-normal">
+                  {brand}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        G SHOCK
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        ROLEX
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        KDM
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        POPUP
-      </div>
-    </div>
-
-    {/* Second Row */}
-    <div className='flex lg:gap-16 gap-2 overflow-x-auto xl:overflow-visible whitespace-nowrap'>
-      <div className='min-w-[12rem] h-12 p-4 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        GYMEN
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        EXIOX
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        DIOMEIN
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        SHWIR
-      </div>
-      <div className='min-w-[12rem] h-12 font-normal hover:text-blue-500 cursor-pointer flex items-center justify-center bg-slate-300 rounded-lg'>
-        TIOX
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 

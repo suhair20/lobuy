@@ -1,187 +1,149 @@
-
-
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import React from 'react'
-import { UserIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { ShoppingCart } from "lucide-react";
-import { User,  } from "lucide-react";
+import { 
+  MagnifyingGlassIcon, 
+  Bars3Icon, 
+  XMarkIcon, 
+  UserIcon 
+} from '@heroicons/react/24/outline';
+import { ShoppingCart, User as UserLucide } from "lucide-react";
 import { useGetCategoriesQuery } from '../../../slices/userSlice';
 
-
-
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Fixed missing state
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { data: categories = [], isLoading } = useGetCategoriesQuery();
 
-    const [menuOpen, setMenuOpen] = useState(false);
-    const {isAuthenticated}=useSelector((state)=>state.auth)
-
-    const { data: categories = [], isLoading } = useGetCategoriesQuery();
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    // Add navigation logic here if needed: e.g., navigate(`/search?q=${e.target.value}`)
+  };
 
   return (
-    <div>
-     
-
-
-<header >
-  {/* Thin white line */}
- 
-<div className="w-full py-2 items-center text-[12px] font-normal justify-center flex bg-gradient-to-tr from-blue-950 to-black text-white" >
-   <p>Have you tried  the Phonefix app ? Discover now! </p>
-</div>
-  <div className="bg-[#fefffdd8] px-4 border-blue-950 shadow-xl  border-b sm:px-20 lg:px-40 md:pt-5 pt-2">
-     
-      <div className="flex items-center justify-between">
-     
-        
-        <h1 className="text-3xl md:text-4xl w-full ml-6 mb-1 md:ml-0 md:w-max  items-center flex justify-center  font-serif font-extrabold">Lobuy</h1>
-
-       <div className="relative w-[600px] hidden md:flex">
-  <MagnifyingGlassIcon className="w-5 h-5 text-gray-800 absolute left-3 top-3" />
-
-  <input
-    type="text"
-    placeholder="Search products..."
-    className="w-full pl-10 pr-4 py-2 bg-slate-200  text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
-</div>
-
-        {isAuthenticated?(
-<div className='gap-3 flex'  >
-  <Link to={'/profile'} >
-           <button className="flex items-center gap-2 text-black hover:text-gray-700">
-      <User className="w-5 h-5" />
-      <span className="text-sm font-medium hidden lg:inline">Account</span>
-     
-    </button>
-    </Link>
-
-
-    <Link  to={'/Cart'} >
-            <button className=" flex space-x-2">
-      <ShoppingCart className="h-5 w-5 text-black" />
-      <span className="text-sm font-medium hidden lg:inline" >Cart</span>
-    </button>
-    </Link>
-
-    </div>
-        ):(
-           <div className=" flex items-center justify-center space-x-2">
-          <Link to={'/login'} >
-          <UserIcon className="h-6 w-6 text-black" />
-          </Link>
-          <Link to={'/login'}>
-          <button className="hidden md:flex hover:text-gray-600">Login / Register</button>
-          </Link>
-        </div>
-        )}
-
-        {/* Right section */}
-       
-
-        {/* Mobile menu icon (three bars) */}
-        <div className="lg:hidden absolute  ">
-          <button onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
-            ) : (
-              <Bars3Icon className="h-6 w-6" />
-            )}
-          </button>
-        </div>
+    <div className="w-full z-50 sticky top-0">
+      {/* Top Promotion Bar */}
+      <div className="w-full py-2 text-[11px] md:text-[12px] font-medium flex items-center justify-center bg-gradient-to-tr from-blue-950 to-black text-white px-4 text-center">
+        <p>Have you tried the Phonefix app? Discover now!</p>
       </div>
 
-      {/* Nav links */}
-      <div className="hidden lg:flex space-x-20 pt-6 pb-2 gap-9 font-normal text-[15px] cursor-pointer text-gray-900 items-center justify-center">
-         <Link to={'/'} >
-        <p className="hover:text-blue-600">Home</p>
-        </Link>
-         {!isLoading &&
-    categories.map((cat) => (
-      <Link key={cat._id} to={`/shop/${cat._id}`}>
-        <p className="hover:text-blue-600">{cat.name}</p>
-      </Link>
-    ))}
-         <Link to={'/shop'} >
-        <p className="hover:text-blue-600">Contact</p>
-        </Link>
-      </div>
-
-      {/* Mobile nav menu */}
-     
-        <div className={`fixed top-0 left-0 w-64     rounded bg-white text-black z-40 transform transition-transform duration-500 ease-in-out ${
-          menuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}>
-
-             <div className="flex justify-center  items-center p-4 border-b">
-          <h2 className="text-lg text-center font-bold">Menu</h2>
+      <header className="bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <XMarkIcon
-           className="h-6 w-6 cursor-pointer absolute right-4"
-            onClick={() => setMenuOpen(false)}
-          />
-         
-        </div>
-        <div className="flex-col  text-lg font-playball items-center p-4  border-b">
-        <Link to={'/'} >
-            <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2 ">Home</p>
-      
-        </div>
-        </Link>
-          <Link to={'/shop'} >
-          <div className='flex justify-between'>
-   <p className="hover:text-blue-600 p-2  ">Men Watches</p>
-         <ChevronRightIcon className="w-7 " />
+          {/* Main Navigation Row */}
+          <div className="flex items-center justify-between h-16 md:h-20 gap-4">
+            
+            {/* Left: Mobile Menu Toggle */}
+            <button 
+              className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md" 
+              onClick={() => setMenuOpen(true)}
+            >
+              <Bars3Icon className="h-6 w-6" />
+            </button>
+
+            {/* Logo */}
+            <Link to="/" className="flex-shrink-0">
+              <h1 className="text-2xl md:text-3xl font-serif font-extrabold tracking-tight text-blue-950">
+                LOBUY
+              </h1>
+            </Link>
+
+            {/* Center: Search Bar (Desktop) */}
+            <div className="hidden md:flex relative flex-1 max-w-md mx-8">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+              </span>
+              <input
+                type="text"
+                placeholder="Search premium products..."
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full bg-gray-50 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
+
+            {/* Right: Auth & Cart */}
+            <div className="flex items-center space-x-2 md:space-x-6">
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-4">
+                  <Link to="/profile" className="group flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
+                    <UserLucide className="w-5 h-5" />
+                    <span className="hidden lg:block text-sm font-semibold">Account</span>
+                  </Link>
+                  <Link to="/cart" className="relative group flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
+                    <ShoppingCart className="w-5 h-5" />
+                    <span className="hidden lg:block text-sm font-semibold">Cart</span>
+                    {/* Optional: Cart Badge */}
+                    <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                  </Link>
+                </div>
+              ) : (
+                <Link to="/login" className="flex items-center gap-2 px-4 py-2 bg-blue-950 text-white rounded-full hover:bg-black transition-all">
+                  <UserIcon className="h-5 w-5" />
+                  <span className="hidden md:inline text-sm font-medium">Login</span>
+                </Link>
+              )}
+            </div>
           </div>
-     
-        </Link>
-         <Link to={'/shop'} >
-         <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2 ">Head phone</p>
-        <ChevronRightIcon className="w-7 " />
+
+          {/* Desktop Category Links */}
+          <nav className="hidden lg:flex items-center justify-center space-x-32 py-3 border-t border-gray-50">
+            <Link to="/" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Home</Link>
+            {!isLoading && categories.map((cat) => (
+              <Link 
+                key={cat._id} 
+                to={`/shop/${cat._id}`} 
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                {cat.name}
+              </Link>
+            ))}
+            <Link to="/contact" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Contact</Link>
+          </nav>
         </div>
+      </header>
+
+      {/* Mobile Drawer (Overlay + Panel) */}
+      <div className={`fixed inset-0 z-[100] transition-opacity duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
         
-        </Link>
-         <Link to={'/shop'} >
-         <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2 ">Ear pode</p>
-        <ChevronRightIcon className="w-7 " />
-        </div>
-        </Link>
-         <Link to={'/shop'} >
-         <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2">Girl Watches</p>
-        <ChevronRightIcon className="w-7 " />
-        </div>
-        </Link>
-         <Link to={'/shop'} >
-       
-        </Link>
-         <Link to={'/shop'} >
-         <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2 ">Accessories</p>
-       
-        </div>
-        </Link>
-         <Link to={'/shop'} >
-         <div className='flex justify-between'>
-        <p className="hover:text-blue-600 p-2">Contact</p>
-        
-        </div>
-        </Link>
-        </div>
-        </div>
-      
+        {/* Panel */}
+        <aside className={`absolute top-0 left-0 w-80 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div className="flex items-center justify-between p-5 border-b">
+            <h2 className="text-xl font-bold font-serif">Menu</h2>
+            <button onClick={() => setMenuOpen(false)} className="p-2 hover:bg-gray-100 rounded-full">
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
+
+          <div className="flex flex-col p-4 space-y-2">
+            <Link to="/" onClick={() => setMenuOpen(false)} className="p-3 text-lg font-medium hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">Home</Link>
+            
+            <div className="py-2">
+              <p className="px-3 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Categories</p>
+              {!isLoading && categories.map((cat) => (
+                <Link 
+                  key={cat._id} 
+                  to={`/shop/${cat._id}`} 
+                  onClick={() => setMenuOpen(false)}
+                  className="block p-3 text-lg font-medium hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+
+            <Link to="/contact" onClick={() => setMenuOpen(false)} className="p-3 text-lg font-medium hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all border-t">Contact Us</Link>
+          </div>
+        </aside>
+      </div>
     </div>
-  {/* Top bar: Logo + Login */}
- 
+  );
+}
 
-
+export default Header;
 
 
 
@@ -192,9 +154,4 @@ function Header() {
     
  
   
-</header>
-    </div>
-  )
-}
 
-export default Header
