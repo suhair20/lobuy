@@ -21,7 +21,11 @@ userRoute.post('/cart/add',UserCheckAuth.UserCheckAuth,usercontroller.addToCart)
 userRoute.get('/cart',UserCheckAuth.UserCheckAuth,usercontroller.getCart)
 userRoute.put('/cart/update',UserCheckAuth.UserCheckAuth,usercontroller.updateCart)
 userRoute.delete('/cart/remove/:productId',UserCheckAuth.UserCheckAuth,usercontroller.removeFromCart)
-
+userRoute.post('/orders',UserCheckAuth.UserCheckAuth,usercontroller.placeOrder)
+userRoute.post('/orders/verify',UserCheckAuth.UserCheckAuth,usercontroller.verifyPayment)
+userRoute.get('/my-orders',UserCheckAuth.UserCheckAuth,usercontroller.getOrders)
+userRoute.get('/orders-deatials/:id',UserCheckAuth.UserCheckAuth,usercontroller.getOrderDetails)
+userRoute.patch('/orders/:id/cancel',UserCheckAuth.UserCheckAuth,usercontroller.cancelOrder)
 
 
 

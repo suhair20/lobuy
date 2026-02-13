@@ -1,194 +1,175 @@
-import React from 'react'
-import Header from './Header'
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Header from './Header';
 import Personalinformation from './Personalinformation';
 import ManageAddress from './ManageAddress';
-
-
-import {User,ShoppingBag,Heart,Ticket,HelpCircle,Package,LogOut} from "lucide-react"
+import { User, ShoppingBag, Heart, Ticket, HelpCircle, LogOut, ChevronLeft, ChevronRight } from "lucide-react"
 import { Link } from 'react-router-dom';
 
 function Profile() {
-
-const [mobilePage, setMobilePage] = useState(null);
+  const [mobilePage, setMobilePage] = useState(null);
   const [activeMenu, setActiveMenu] = useState("profile");
 
-
-const handleMenuClick = (menu) => {
-  setActiveMenu(menu);
-
-  // ON MOBILE → open full page
-  if (window.innerWidth < 768) {
-    setMobilePage(menu);
-  }
-};
-
-
+  const handleMenuClick = (menu) => {
+    setActiveMenu(menu);
+    if (window.innerWidth < 768) {
+      setMobilePage(menu);
+    }
+  };
 
   return (
-    <>
-    <Header/>
-    <div className=' shadow-md   h-full ' >
-   
+    <div className="bg-gray-50 min-h-screen">
+      <Header />
+      
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 py-8 md:px-16">
+        
+        {/* Top Icon Grid */}
+        <div className="grid grid-cols-2 md:flex md:justify-center gap-4 md:gap-8 mb-10">
+          <Link to={'/Orders'} className="w-full md:w-auto">
+            <button className="w-full flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-500 hover:bg-blue-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
+              <ShoppingBag className="w-6 h-6 text-blue-600" />
+              <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Orders</span>
+            </button>
+          </Link>
 
-  <div className="fixed md:px-32    items-center justify-center left-0 w-full p-4 h-full  z-50 overflow-y-auto ">
+          <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-pink-500 hover:bg-pink-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
+            <Heart className="w-6 h-6 text-pink-600" />
+            <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Wishlist</span>
+          </button>
 
-    <div  className='  md:px-16  items-center justify-center   ' >
-    
-    {/* Header */}
-    
+          <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-500 hover:bg-orange-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
+            <Ticket className="w-6 h-6 text-orange-600" />
+            <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Coupons</span>
+          </button>
 
-
-    {/* Menu Items */}
-    <div className="p-4  md:flex items-center justify-center grid  grid-cols-2 gap-10 md:gap-20">
-     <Link to={'/Orders'} >
-      <button className="md:flex-row flex flex-col items-center border justify-center border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all shadow-md p-8 rounded-xl gap-3">
-  <ShoppingBag className="md:w-6 md:h-10 text-blue-600" />
-  <span className="text-base font-medium">Orders</span>
-</button>
-</Link>
-
-
-      <button className="md:flex-row flex flex-col items-center border border-gray-200 hover:border-pink-500 hover:bg-blue-50 transition-all shadow-md p-8 rounded-xl gap-3">
-        <Heart className="md:w-5 md:h-10 text-pink-600" />
-        <span className='text-base font-medium' >Wishlist</span>
-      </button>
-
-      <button className="md:flex-row flex flex-col items-center border border-gray-200 hover:border-orange-500 hover:bg-blue-50 transition-all shadow-md p-8 rounded-xl gap-3">
-        <Ticket className="md:w-6 md:h-10 text-orange-600" />
-        <span className='text-base font-medium'  >Coupons</span>
-      </button>
-
-      <button className="md:flex-row flex flex-col items-center border border-gray-200 hover:border-green-500 hover:bg-blue-50 transition-all shadow-md p-8 rounded-xl gap-3">
-        <HelpCircle className="md:w-6 md:h-10 text-green-600" />
-        <span className='text-base font-medium' >Help Center</span>
-      </button>
-
-    </div>
-   <div className="w-full h-full">
-
-  {/* MOBILE SMALL SCREEN MODE */}
-  <div className="md:hidden w-full">
-    
-    {/* If no page selected → show only sidebar */}
-    {!mobilePage && (
-      <div className="p-4 space-y-2">
- <div className='flex  ' > 
-      <User className="text-blue-600 mt-1 " size={20} />
-      <p className="font-semibold  p-1 text-gray-600 mb-3">ACCOUNT SETTINGS</p>
-</div>
-        <div
-          className=" px-6 hover:bg-blue-900 hover:text-white bg-gray-100 rounded cursor-pointer"
-          onClick={() => handleMenuClick("profile")}
-        >
-          Profile Information
+          <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-green-500 hover:bg-green-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
+            <HelpCircle className="w-6 h-6 text-green-600" />
+            <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Help Center</span>
+          </button>
         </div>
 
-        <div
-          className=" px-6 bg-gray-100 rounded cursor-pointer"
-          onClick={() => handleMenuClick("address")}
-        >
-          Manage Address
+        {/* Dashboard Section */}
+        <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          
+          {/* MOBILE VIEW */}
+          <div className="md:hidden">
+            {!mobilePage && (
+              <div className="p-6 space-y-6">
+                <div>
+                  <div className="flex items-center gap-2 text-blue-600 mb-4">
+                    <User size={18} strokeWidth={3} />
+                    <p className="font-black text-xs uppercase tracking-[0.2em]">Account Settings</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div onClick={() => handleMenuClick("profile")} className="flex justify-between items-center p-4 bg-slate-50 rounded-xl font-bold text-slate-700 active:bg-blue-600 active:text-white transition-all">
+                      Profile Information <ChevronRight size={16} />
+                    </div>
+                    <div onClick={() => handleMenuClick("address")} className="flex justify-between items-center p-4 bg-slate-50 rounded-xl font-bold text-slate-700 active:bg-blue-600 active:text-white transition-all">
+                      Manage Address <ChevronRight size={16} />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2 text-blue-600 mb-4 pt-4 border-t border-slate-100">
+                    <ShoppingBag size={18} strokeWidth={3} />
+                    <p className="font-black text-xs uppercase tracking-[0.2em]">My Own</p>
+                  </div>
+                  <ul className="space-y-2">
+                    {['All Notifications', 'My Reviews', 'My Wishlist'].map((item) => (
+                      <li key={item} className="p-4 text-slate-600 font-bold hover:bg-slate-50 rounded-xl cursor-pointer">{item}</li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 mt-6 border-t border-slate-100 cursor-pointer">
+                    <LogOut size={18} /> Logout
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {mobilePage === "profile" && (
+              <div className="animate-in slide-in-from-right duration-300">
+                <button className="flex items-center gap-2 p-6 text-blue-600 font-bold" onClick={() => setMobilePage(null)}>
+                  <ChevronLeft size={20} /> Back
+                </button>
+                <div className="p-6 pt-0"><Personalinformation /></div>
+              </div>
+            )}
+
+            {mobilePage === "address" && (
+              <div className="animate-in slide-in-from-right duration-300">
+                <button className="flex items-center gap-2 p-6 text-blue-600 font-bold" onClick={() => setMobilePage(null)}>
+                  <ChevronLeft size={20} /> Back
+                </button>
+                <div className="p-6 pt-0"><ManageAddress /></div>
+              </div>
+            )}
+          </div>
+
+          {/* DESKTOP VIEW */}
+          <div className="hidden md:flex min-h-[600px]">
+            {/* Sidebar */}
+            <div className="w-80 border-r border-slate-100 p-8 bg-slate-50/50">
+              <div className="flex items-center gap-2 text-blue-600 mb-6">
+                <User size={18} strokeWidth={3} />
+                <p className="font-black text-xs uppercase tracking-[0.2em]">Account Settings</p>
+              </div>
+              
+              <div className="space-y-2 mb-8">
+                <button 
+                  onClick={() => handleMenuClick("profile")}
+                  className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-all ${activeMenu === "profile" ? "bg-blue-600 text-white shadow-lg shadow-blue-200" : "text-slate-500 hover:bg-white hover:shadow-sm"}`}
+                >
+                  Profile Information
+                </button>
+                <button 
+                  onClick={() => handleMenuClick("address")}
+                  className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-all ${activeMenu === "address" ? "bg-blue-600 text-white shadow-lg shadow-blue-200" : "text-slate-500 hover:bg-white hover:shadow-sm"}`}
+                >
+                  Manage Address
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 text-blue-600 mb-6 pt-6 border-t border-slate-200">
+                <ShoppingBag size={18} strokeWidth={3} />
+                <p className="font-black text-xs uppercase tracking-[0.2em]">My Own</p>
+              </div>
+              
+              <ul className="space-y-1 mb-8">
+                {['Notification', 'Review', 'Wishlist'].map((item) => (
+                  <li 
+                    key={item}
+                    onClick={() => handleMenuClick(item)}
+                    className={`px-4 py-3 rounded-xl font-bold cursor-pointer transition-all ${activeMenu === item ? "bg-blue-600 text-white shadow-lg" : "text-slate-500 hover:bg-white"}`}
+                  >
+                    My {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 border-t border-slate-200 cursor-pointer hover:opacity-70 transition-opacity">
+                <LogOut size={18} /> Logout
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="flex-1 p-10 overflow-y-auto bg-white">
+              <div className="max-w-4xl mx-auto">
+                {activeMenu === "profile" && <Personalinformation />}
+                {activeMenu === "address" && <ManageAddress />}
+                {!['profile', 'address'].includes(activeMenu) && (
+                  <div className="flex flex-col items-center justify-center h-full text-slate-400 italic font-medium">
+                    Coming soon...
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
         </div>
-
-
-<div className="flex border-r items-center gap-2 text-gray-600 font-semibold mb-3">
-   <ShoppingBag className="text-blue-600" size={18} /> 
-   MYOWN 
-   </div>
-    <ul className="space-y-1"> 
-      <li className="py-2 px-3 text-gray-700 hover:bg-gray-100 rounded cursor-pointer"> All Notification </li> 
-      <li className="py-2 px-3 text-gray-700 hover:bg-gray-100 rounded cursor-pointer"> MY Review </li>
-       <li className="py-2 px-3 text-gray-700 hover:bg-gray-100 rounded cursor-pointer"> MY Wishlist </li> 
-       </ul> 
-       <div className="flex pt-4 border-t items-center gap-2 text-gray-600 font-semibold mb-3">
-         <LogOut className="text-blue-600" size={18} /> Logout </div>
-          
-
-
-
       </div>
-    )}
-
-    {/* If page selected → open full-screen page */}
-    {mobilePage === "profile" && (
-      <div>
-        <button className="p-3" onClick={() => setMobilePage(null)}>← Back</button>
-        <Personalinformation />
-      </div>
-    )}
-
-    {mobilePage === "address" && (
-      <div>
-        <button className="p-3" onClick={() => setMobilePage(null)}>← Back</button>
-        <ManageAddress />
-      </div>
-    )}
-  </div>
-
-  {/* DESKTOP VIEW */}
-  <div className="hidden md:flex w-full h-full">
-
-    {/* LEFT SIDEBAR */}
-    <div className="w-72  border-r p-4">
-      <div className='flex  ' > 
-      <User className="text-blue-600 mt-1 " size={20} />
-      <p className="font-semibold  p-1 text-gray-600 mb-3">ACCOUNT SETTINGS</p>
-</div>
-      <div
-        className={` p-1 px-3 mb-2 hover:bg-blue-900 hover:text-white  cursor-pointer ${activeMenu === "profile" ? "text-blue-800   rounded-md shadow-md " : ""}`}
-        onClick={() => handleMenuClick("profile")}
-      >
-        Profile Information
-      </div>
-
-      <div
-        className={` p-1 mb-2 px-3 hover:bg-blue-900  hover:text-white cursor-pointer ${activeMenu === "address" ? "text-blue-800 rounded-md shadow-xl " : ""}`}
-        onClick={() => handleMenuClick("address")}
-      >
-        Manage Address
-      </div>
-
-
-
-
-<div className="flex  border-r items-center gap-2 text-gray-600 font-semibold mb-3">
-   <ShoppingBag className="text-blue-600" size={18} /> 
-   MYOWN 
-   </div>
-    <ul className="space-y-1"> 
-      <li className={`p-1 px-3  hover:bg-blue-900 hover:text-white rounded cursor-pointer ${activeMenu === "Notification" ? "text-blue-800 rounded-md shadow-xl " : ""}`}
-        onClick={() => handleMenuClick("Notification")}> All Notification </li> 
-      <li className={`p-1 px-3  hover:bg-blue-900 hover:text-white rounded cursor-pointer ${activeMenu === "Review" ? "text-blue-800 rounded-md shadow-xl " : ""}`}
-        onClick={() => handleMenuClick("Review")}> MY Review </li>
-       <li className={`p-1 px-3  hover:bg-blue-900 hover:text-white rounded cursor-pointer ${activeMenu === "Wishlist" ? "text-blue-800 rounded-md shadow-xl " : ""}`}
-        onClick={() => handleMenuClick("Wishlist")}> MY Wishlist </li> 
-       </ul> 
-       <div className="flex pt-4 border-t items-center gap-2 text-gray-600 font-semibold mb-3">
-         <LogOut className="text-blue-600" size={18} /> Logout </div>
-          
-
-
     </div>
-
-    {/* RIGHT CONTENT */}
-    <div className="flex-1 p-5">
-      {activeMenu === "profile" && <Personalinformation />}
-      {activeMenu === "address" && <ManageAddress />}
-    </div>
-  </div>
-</div>
-
-
-
-</div>
- 
-  </div>
-
-
-    </div>
-    </>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

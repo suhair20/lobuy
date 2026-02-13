@@ -1,6 +1,7 @@
 
 import bcrypt from 'bcrypt'
-
+import {razorpay} from "../config/razorpay.js"
+import crypto from 'crypto'
 import { otpService } from '../Services/otpService.js';
 import User from '../models/userModel.js';
 import Jwt from '../Services/jwt.js';
@@ -8,6 +9,7 @@ import Address from '../models/Address.js'
 import Product from '../models/product.Model.js'
 import categories from '../models/CategoryModel.js'
 import Cart from '../models/cartModel.js'
+import Order from '../models/orderModel.js'
  
 export const registration = async (req, res) => {
   try {
@@ -190,7 +192,7 @@ export const checkAuth =async (req,res)=>{
 export const addAddress = async (req, res) => {
    try { 
 
-    console.log("its comiuuuchelo");
+  
     
     const userId = req.user.id; 
     const {
@@ -225,13 +227,13 @@ export const addAddress = async (req, res) => {
         export const getAddress = async (req, res) => { 
           try { 
             
-            console.log("cominghghghghsfd");
+           
             
 
             const userId = req.user.id;
             
             const addresses = await Address.find({ userId });
-            console.log('verunnu',addresses);
+            
             
             return res.json({ success: true, addresses });
            } 
@@ -460,7 +462,7 @@ export const updateCart = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
   try {
-    console.log("hiiiiii");
+    
     
     const userId = req.user.id;
     const { productId } = req.params;
@@ -478,5 +480,206 @@ export const removeFromCart = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const placeOrder = async (req, res) => {
+  try {
+   
+    
+    const { shippingAddress, items, totalAmount } = req.body;
+    const userId = req.user.id;
+
+    if (!items || items.length === 0) {
+      return res.status(400).json({ message: "No items in order" });
+    }
+
+    // 1. Create Order in Razorpay
+    const options = {
+      amount: Math.round(totalAmount * 100), // Total in paise
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
+
+    const rzpOrder = await razorpay.orders.create(options);
+
+    // 2. Map items to match your Schema's "products" array
+    const formattedProducts = items.map(item => ({
+      productId: item.productId._id || item.productId, // Handle both object and ID
+      quantity: item.quantity,
+      price: item.price,
+      totalPrice: item.price * item.quantity,
+      productStatus: 'placed'
+    }));
+
+    // 3. Create Order in Database (Matches your Schema exactly)
+    const order = new Order({
+      user: userId,
+      delivery_address: shippingAddress, // Matches 'delivery_address' in Schema
+      payment: 'Razorpay',               // Matches 'payment' String in Schema
+      razorpayOrderId: rzpOrder.id,      // Stored for verification
+      products: formattedProducts,       // Matches 'products' array in Schema
+      subtotal: totalAmount,             // Matches 'subtotal' in Schema
+      orderDate: new Date(),
+      orderStatus: 'pending'
+    });
+
+    const createdOrder = await order.save();
+
+    // 4. Clear the Cart
+    await Cart.findOneAndDelete({ user: userId });
+
+    // 5. Response for Frontend
+    res.status(201).json({
+      success: true,
+      orderId: createdOrder._id,
+      razorpayOrderId: rzpOrder.id,
+      amount: rzpOrder.amount,
+      currency: rzpOrder.currency,
+    });
+
+  } catch (error) {
+    console.error("Order Error:", error);
+    res.status(500).json({ message: "Order creation failed", error: error.message });
+  }
+};
+
+
+
+
+
+
+
+export const verifyPayment = async (req, res) => {
+  try {
+
+    
+    
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+  
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(sign.toString())
+      .digest("hex");
+
+    if (razorpay_signature === expectedSign) {
+      
+      await Order.findOneAndUpdate(
+        { razorpayOrderId: razorpay_order_id },
+        { 
+          orderStatus: 'placed', 
+          razorpayPaymentId: razorpay_payment_id 
+        }
+      );
+
+      return res.status(200).json({ success: true, message: "Payment Verified" });
+    } else {
+      return res.status(400).json({ success: false, message: "Invalid Signature" });
+    }
+  } catch (error) {
+  console.error("DETAILED VERIFICATION ERROR:", error); // Check your terminal for this!
+  res.status(500).json({ message: "Verification Error", error: error.message });
+}
+};
+
+export const getOrders = async (req, res) => {
+  try {
+  
+    // Check if the Order model is actually loaded
+    const orders = await Order.find({ user: req.user.id })
+      .populate({
+        path: 'products.productId',
+        // Force it to look for the correct model name
+      })
+      .sort({ createdAt: -1 });
+
+   
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("3. ERROR DURING FETCH:", error.message);
+    res.status(500).json({ message: "Error fetching orders", error: error.message });
+  }
+};
+
+
+
+
+// Get a single order by ID
+export const getOrderDetails = async (req, res) => {
+  try {
+
+    
+    const order = await Order.findById(req.params.id)
+      .populate('products.productId')
+      .populate('user', 'name email');
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+   
+    
+
+    // Security check: Ensure this order actually belongs to the user requesting it
+    if (order.user._id.toString() !== req.user.id.toString()) {
+      return res.status(401).json({ message: "Not authorized to view this order" });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching order details", error: error.message });
+  }
+};
+
+
+
+// Controller to cancel a specific order
+export const cancelOrder = async (req, res) => {
+  try {
+    
+    
+    const { id } = req.params;
+  console.log("heloo coming",id);
+  
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+  
+    if (order.user.toString() !== req.user.id.toString()) {
+      return res.status(401).json({ message: "Not authorized to cancel this order" });
+    }
+
+    const restrictedStatuses = ['shipped', 'out-for-delivery', 'delivered', 'cancelled'];
+    
+    if (restrictedStatuses.includes(order.orderStatus.toLowerCase())) {
+      return res.status(400).json({ 
+        message: `Cannot cancel order. Current status is: ${order.orderStatus}` 
+      });
+    }
+
+    // 4. Update the Database
+    order.orderStatus = 'cancelled';
+    
+   
+    order.products.forEach(product => {
+      product.productStatus = 'cancelled';
+    });
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order has been cancelled successfully",
+      order
+    });
+
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

@@ -160,6 +160,48 @@ RemoveFromCart: builder.mutation({
   invalidatesTags: ["Cart"],
 }),
 
+createOrder: builder.mutation({
+      query: (orderData) => ({
+        url: '/api/user/orders', 
+        method:'POST',
+        body: orderData,
+      }),
+      
+      invalidatesTags: ['Cart'], 
+    }),
+
+  verifyPayment: builder.mutation({     
+  query: (paymentDetails) => ({
+    url: '/api/user/orders/verify', 
+    method: 'POST',
+    body: paymentDetails,
+  }),
+}),
+
+getMyOrders: builder.query({
+      query: () => ({
+        url: '/api/user/my-orders',
+        method: 'GET',
+      }),
+      providesTags: ['Order'],
+    }),
+
+    getOrderDetails: builder.query({
+      query: (id) => ({
+        url: `/api/user/orders-deatials/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Order'],
+    }),
+
+    cancelOrder: builder.mutation({
+  query: (id) => ({
+    url: `/api/user/orders/${id}/cancel`,
+    method: 'PATCH', 
+  }),
+  invalidatesTags: ['Order'], 
+}),
+
 
 
 
@@ -184,6 +226,11 @@ export const {
     useGetCartQuery,
     useAddToCartMutation,
     useUpdateCartMutation,
-    useRemoveFromCartMutation
+    useRemoveFromCartMutation,
+    useCreateOrderMutation,
+    useVerifyPaymentMutation,
+    useGetMyOrdersQuery,
+    useGetOrderDetailsQuery,
+    useCancelOrderMutation
 
-}=userSlice
+}=userSlice   
