@@ -31,6 +31,7 @@ console.log("API DATA:", data);
     <>
     <div className='   ' >
       <Header/>
+      
 <div className='  bg-[#fefffdd8] '>
    
 
