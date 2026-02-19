@@ -20,7 +20,11 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   
-  origin:'https://lobuy.vercel.app',
+  origin:[
+    'https://lobuy.in',
+    'https://www.lobuy.in',
+    'https://lobuy.vercel.app' 
+  ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
