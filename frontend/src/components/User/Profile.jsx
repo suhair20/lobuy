@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Personalinformation from './Personalinformation';
 import ManageAddress from './ManageAddress';
+import LogoutModal from './LogoutModal'; // 1. Import the Modal
 import { User, ShoppingBag, Heart, Ticket, HelpCircle, LogOut, ChevronLeft, ChevronRight } from "lucide-react"
 import { Link } from 'react-router-dom';
+import { logout } from '../../../slices/AuthSlice'
+import { useLogoutApiMutation } from '../../../slices/userSlice';
 
 function Profile() {
+  const dispatch = useDispatch();
   const [mobilePage, setMobilePage] = useState(null);
   const [activeMenu, setActiveMenu] = useState("profile");
+  const [isModalOpen, setIsModalOpen] = useState(false); // 2. State for Modal
+  const [logoutApi, { isLoading }] = useLogoutApiMutation();
+  const navigate = useNavigate();
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
@@ -15,6 +24,22 @@ function Profile() {
       setMobilePage(menu);
     }
   };
+
+  // 3. This function is called when user clicks "Yes, Logout" in the Modal
+  const handleConfirmLogout = async () => {
+    try {
+      console.log("logout");
+      
+      await logoutApi().unwrap();
+      
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.error("Logout failed", err);
+    } finally {
+      setIsModalOpen(false);
+    }
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -31,17 +56,15 @@ function Profile() {
               <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Orders</span>
             </button>
           </Link>
-
+          {/* ... other top buttons (Wishlist, Coupons, Help) ... */}
           <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-pink-500 hover:bg-pink-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
             <Heart className="w-6 h-6 text-pink-600" />
             <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Wishlist</span>
           </button>
-
           <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-500 hover:bg-orange-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
             <Ticket className="w-6 h-6 text-orange-600" />
             <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Coupons</span>
           </button>
-
           <button className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-green-500 hover:bg-green-50 transition-all p-6 md:p-8 rounded-2xl gap-3">
             <HelpCircle className="w-6 h-6 text-green-600" />
             <span className="text-sm font-bold uppercase tracking-tight text-slate-700">Help Center</span>
@@ -80,13 +103,17 @@ function Profile() {
                       <li key={item} className="p-4 text-slate-600 font-bold hover:bg-slate-50 rounded-xl cursor-pointer">{item}</li>
                     ))}
                   </ul>
-                  <div className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 mt-6 border-t border-slate-100 cursor-pointer">
+                  {/* MOBILE LOGOUT TRIGGER */}
+                  <div 
+                    onClick={() => setIsModalOpen(true)} 
+                    className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 mt-6 border-t border-slate-100 cursor-pointer active:opacity-50"
+                  >
                     <LogOut size={18} /> Logout
                   </div>
                 </div>
               </div>
             )}
-
+            {/* ... Mobile Page renders (profile/address) ... */}
             {mobilePage === "profile" && (
               <div className="animate-in slide-in-from-right duration-300">
                 <button className="flex items-center gap-2 p-6 text-blue-600 font-bold" onClick={() => setMobilePage(null)}>
@@ -95,7 +122,6 @@ function Profile() {
                 <div className="p-6 pt-0"><Personalinformation /></div>
               </div>
             )}
-
             {mobilePage === "address" && (
               <div className="animate-in slide-in-from-right duration-300">
                 <button className="flex items-center gap-2 p-6 text-blue-600 font-bold" onClick={() => setMobilePage(null)}>
@@ -147,7 +173,11 @@ function Profile() {
                 ))}
               </ul>
 
-              <div className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 border-t border-slate-200 cursor-pointer hover:opacity-70 transition-opacity">
+              {/* DESKTOP LOGOUT TRIGGER */}
+              <div 
+                onClick={() => setIsModalOpen(true)} 
+                className="flex items-center gap-2 text-red-500 font-black text-xs uppercase tracking-widest pt-6 border-t border-slate-200 cursor-pointer hover:opacity-70 transition-opacity"
+              >
                 <LogOut size={18} /> Logout
               </div>
             </div>
@@ -165,9 +195,16 @@ function Profile() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
+
+      {/* 4. THE MODAL COMPONENT */}
+      <LogoutModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onConfirm={handleConfirmLogout}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

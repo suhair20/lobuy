@@ -26,6 +26,7 @@ userRoute.post('/orders/verify',UserCheckAuth.UserCheckAuth,usercontroller.verif
 userRoute.get('/my-orders',UserCheckAuth.UserCheckAuth,usercontroller.getOrders)
 userRoute.get('/orders-deatials/:id',UserCheckAuth.UserCheckAuth,usercontroller.getOrderDetails)
 userRoute.patch('/orders/:id/cancel',UserCheckAuth.UserCheckAuth,usercontroller.cancelOrder)
+userRoute.post('/logout',UserCheckAuth.UserCheckAuth,usercontroller.logout)
 
 
 

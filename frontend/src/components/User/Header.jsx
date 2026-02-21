@@ -25,7 +25,7 @@ function Header({ minimal = false }) {
       {/* 1. Promotion Bar */}
       {!minimal && (
         <div className="w-full py-2 text-[11px] md:text-[12px] font-medium flex items-center justify-center bg-gradient-to-tr from-blue-950 to-black text-white px-4 text-center">
-          <p>Have you tried the Phonefix app? Discover now!</p>
+          <p>Have you tried the Lobuy app? Discover now!</p>
         </div>
       )}
 

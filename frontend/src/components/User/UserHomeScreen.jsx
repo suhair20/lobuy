@@ -146,7 +146,7 @@ console.log("API DATA:", data);
 
 
 <div className="bg-[#fefffdd8] py-16 mt-12 px-6 md:px-36  ">
-  <h2 className="text-3xl font-bold mb-10">Explore phonefix</h2>
+  <h2 className="text-3xl font-bold mb-10">Explore Lobuy</h2>
 
   <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-10 text-gray-700">
     <div>

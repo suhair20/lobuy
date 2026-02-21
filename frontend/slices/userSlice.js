@@ -202,6 +202,13 @@ getMyOrders: builder.query({
   invalidatesTags: ['Order'], 
 }),
 
+logoutApi: builder.mutation({
+      query: () => ({
+        url: '/api/user/logout',
+        method: 'POST',
+      }),
+    }),
+
 
 
 
@@ -231,6 +238,7 @@ export const {
     useVerifyPaymentMutation,
     useGetMyOrdersQuery,
     useGetOrderDetailsQuery,
-    useCancelOrderMutation
+    useCancelOrderMutation,
+    useLogoutApiMutation
 
 }=userSlice   

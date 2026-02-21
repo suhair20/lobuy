@@ -10,6 +10,7 @@ import Product from '../models/product.Model.js'
 import categories from '../models/CategoryModel.js'
 import Cart from '../models/cartModel.js'
 import Order from '../models/orderModel.js'
+
  
 export const registration = async (req, res) => {
   try {
@@ -682,4 +683,19 @@ export const cancelOrder = async (req, res) => {
     
     res.status(500).json({ message: "Server error", error: error.message });
   }
+};
+
+
+
+export const logout = (req, res) => {
+console.log("heloo");
+
+
+  res.cookie("token", "", {
+    httpOnly: true,
+    expires: new Date(0), 
+    sameSite: "strict",
+  });
+  
+  res.status(200).json({ success: true, message: "Logged out" });
 };
