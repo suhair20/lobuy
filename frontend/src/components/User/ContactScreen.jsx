@@ -40,7 +40,7 @@ function ContactScreen() {
             </div>
             <div>
               <h3 className="font-bold text-gray-900">Phone</h3>
-              <p className="text-gray-600 text-sm mt-1">+91 98765 43210</p>
+              <p className="text-gray-600 text-sm mt-1">+91 8606990014</p>
               <p className="text-gray-400 text-xs mt-1">Mon-Sat: 9am - 7pm</p>
             </div>
           </div>
@@ -62,8 +62,8 @@ function ContactScreen() {
             </div>
             <div>
               <h3 className="font-bold text-gray-900">Location</h3>
-              <p className="text-gray-600 text-sm mt-1">123 Tech Park, Electronics City</p>
-              <p className="text-gray-400 text-xs mt-1">Bangalore, India</p>
+              <p className="text-gray-600 text-sm mt-1"></p>
+              <p className="text-gray-400 text-xs mt-1">kerala, India</p>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ function ContactScreen() {
                 <input 
                   type="text" 
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
-                  placeholder="John Doe"
+                  placeholder="jeevan"
                   required
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
@@ -92,7 +92,7 @@ function ContactScreen() {
                 <input 
                   type="email" 
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
-                  placeholder="john@example.com"
+                  placeholder="jeevann@example.com"
                   required
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />

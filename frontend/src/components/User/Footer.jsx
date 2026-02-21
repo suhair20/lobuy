@@ -1,170 +1,111 @@
-import React from 'react'
+import React from 'react';
+import { Mail, Phone, MapPin, Instagram, Facebook, Twitter, Github } from 'lucide-react';
 
 function Footer() {
-  return ( 
-    <div>
-      {/* #1f2937 */}
-    <footer className=" bg-gradient-to-tr text-white from-blue-950 via-black to-blue-950 pt-4 pb-8 xl:pt-8    ">
- <div className='  p-3 gap-2 items center justify-center px-36  grid grid-row-2 md:grid-cols-2 ' >
-    <div className=' flex flex-col items-center justify-center ' >
- <h2 className="text-white  font-serif   text-center md:flex dark:text-gray-200 text-2xl uppercase mb-4  ">
-                           Phonefix
-                        </h2>
-                        <div className='h-9 rounded-lg w-48 flex items-center justify-center border border-white' >
-                          <h1>Subscribe Now</h1>
-                        </div>
+  return (
+    <footer className="bg-gradient-to-tr from-blue-950 via-black to-blue-950 text-gray-300 font-sans">
+      {/* 1. Newsletter & Branding Section */}
+      <div className="max-w-7xl mx-auto px-4 pt-16 pb-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-white/10 pb-12">
+          <div>
+            <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-tighter mb-2">
+              Lobuy<span className="text-blue-500">.</span>
+            </h2>
+            <p className="text-sm text-gray-400 max-w-sm">
+              Your destination for premium products and seamless shopping. Elevate your lifestyle with our curated collections.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 md:justify-end">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              className="bg-white/5 border border-white/20 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-full sm:w-64"
+            />
+            <button className="bg-white text-black font-bold py-2.5 px-6 rounded-lg hover:bg-blue-500 hover:text-white transition-all text-sm uppercase">
+              Subscribe
+            </button>
+          </div>
+        </div>
 
-    </div>
-
-   <div className=' flex flex-col items-center justify-center ' >
-         <h2 className="text-white font-robot-bold text-center md:flex  dark:text-gray-200 text-2xl uppercase mb-4  ">
-                          Settings
-                        </h2>
-                        <div className='h-9 rounded-lg   p-1 md:w-60 flex text-sm items-center justify-center border border-white' >
-                          <h1>moidheensuhair@gmail.com</h1>
-                        </div>
-    </div>
-
-  
-                        </div>
-                        <div className='py-10 px-20 ' >
-             <div className="h-px  bg-white w-full"></div>
-                        </div>
-
-                        
-        <div className="max-w-screen-lg px-4 mx-auto text-gray-400 xl:max-w-screen-xl sm:px-6 md:px-8 dark:text-gray-300    ">
-            
-            <ul className="flex flex-wrap justify-center pb-8 text-lg font-light">
-                
-                <li className="w-1/2 md:w-1/3 lg:w-1/3">
-                    <div className="text-center   ">
-                      
-                        <h2 className="text-white font-robot-bold dark:text-gray-200 text-md uppercase mb-4  ">
-                            Company
-                        </h2>
-                        <ul>
-                            <li className="mb-4 transition-colors  font-robot  duration-200 hover:text-white light:hover:text-white">
-                                <a href="#">
-                                    About us
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-white light:hover:text-white">
-                                <a href="#">
-                                    our offering
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-white dark:hover:text-white">
-                                <a href="#">
-                                    Newsroom
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-white dark:hover:text-white">
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li className="w-1/2 md:w-1/3 lg:w-1/3">
-                    <div className="text-center">
-                        <h2 className="text-white font-robot-bold dark:text-gray-200 text-md uppercase mb-4">
-                            Contacts
-                        </h2>
-                        <ul>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    Github
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    Facebook
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    Twitter
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    LinkedIn
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li className="w-1/2 md:w-1/3 lg:w-1/3">
-                    <div className="text-center">
-                        <h2 className="text-white font-robot-bold dark:text-gray-200 text-md uppercase mb-4">
-                            Travel
-                        </h2>
-                        <ul>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    Reserve
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    Airpot
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    cities
-                                </a>
-                            </li>
-                            <li className="mb-4 transition-colors font-robot duration-200 hover:text-gray-800 dark:hover:text-white">
-                                <a href="#">
-                                    
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+        {/* 2. Main Links Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 py-12">
+          {/* Column 1 */}
+          <div>
+            <h3 className="text-white font-bold uppercase text-xs tracking-widest mb-6">Shopping</h3>
+            <ul className="space-y-4 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">New Arrivals</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Best Sellers</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Offers & Discounts</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Store Locator</a></li>
             </ul>
-            <div className="pt-8 flex border-t border-gray-200 max-w-xs mx-auto items-center justify-between">
-                <a href="#">
-                    <svg width="20" height="20" fill="currentColor" className="text-xl text-white transition-colors duration-200 hover:text-white dark:hover:text-white" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg width="20" height="20" fill="currentColor" className="text-xl transition-colors text-white duration-200 hover:text-gray-800 dark:hover:text-white" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5t-115.5 248.5-184.5 210.5-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5t-114-159.5q33 5 61 5 43 0 85-11-112-23-185.5-111.5t-73.5-205.5v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5t371.5 99.5q-8-38-8-74 0-134 94.5-228.5t228.5-94.5q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="text-xl transition-colors  text-white duration-200 hover:text-gray-800 dark:hover:text-white" viewBox="0 0 1792 1792">
-                        <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg width="20" height="20" fill="currentColor" className="text-xl transition-colors  text-white duration-200 hover:text-gray-800 dark:hover:text-white" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M477 625v991h-330v-991h330zm21-306q1 73-50.5 122t-135.5 49h-2q-82 0-132-49t-50-122q0-74 51.5-122.5t134.5-48.5 133 48.5 51 122.5zm1166 729v568h-329v-530q0-105-40.5-164.5t-126.5-59.5q-63 0-105.5 34.5t-63.5 85.5q-11 30-11 81v553h-329q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5 114.5-15.5q171 0 275 113.5t104 332.5z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg width="20" height="20" fill="currentColor" className="text-xl transition-colors duration-200  text-white hover:text-gray-800 dark:hover:text-white" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1551 1476q15-6 26-3t11 17.5-15 33.5q-13 16-44 43.5t-95.5 68-141 74-188 58-229.5 24.5q-119 0-238-31t-209-76.5-172.5-104-132.5-105-84-87.5q-8-9-10-16.5t1-12 8-7 11.5-2 11.5 4.5q192 117 300 166 389 176 799 90 190-40 391-135zm207-115q11 16 2.5 69.5t-28.5 102.5q-34 83-85 124-17 14-26 9t0-24q21-45 44.5-121.5t6.5-98.5q-5-7-15.5-11.5t-27-6-29.5-2.5-35 0-31.5 2-31 3-22.5 2q-6 1-13 1.5t-11 1-8.5 1-7 .5h-10l-3-.5-2-1.5-1.5-3q-6-16 47-40t103-30q46-7 108-1t76 24zm-394-443q0 31 13.5 64t32 58 37.5 46 33 32l13 11-227 224q-40-37-79-75.5t-58-58.5l-19-20q-11-11-25-33-38 59-97.5 102.5t-127.5 63.5-140 23-137.5-21-117.5-65.5-83-113-31-162.5q0-84 28-154t72-116.5 106.5-83 122.5-57 130-34.5 119.5-18.5 99.5-6.5v-127q0-65-21-97-34-53-121-53-6 0-16.5 1t-40.5 12-56 29.5-56 59.5-48 96l-294-27q0-60 22-119t67-113 108-95 151.5-65.5 190.5-24.5q100 0 181 25t129.5 61.5 81 83 45 86 12.5 73.5v589zm-672 21q0 86 70 133 66 44 139 22 84-25 114-123 14-45 14-101v-162q-59 2-111 12t-106.5 33.5-87 71-32.5 114.5z">
-                        </path>
-                    </svg>
-                </a>
-            </div>
-            <div className="text-center  text-white pt-10 sm:pt-12 font-light flex items-center justify-center">
-                Created by suhair
-            </div>
+          </div>
+
+          {/* Column 2 */}
+          <div>
+            <h3 className="text-white font-bold uppercase text-xs tracking-widest mb-6">Company</h3>
+            <ul className="space-y-4 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Sustainability</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Newsroom</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3 */}
+          <div>
+            <h3 className="text-white font-bold uppercase text-xs tracking-widest mb-6">Customer Care</h3>
+            <ul className="space-y-4 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Track Your Order</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Returns & Exchanges</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Shipping Info</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4 */}
+          <div>
+            <h3 className="text-white font-bold uppercase text-xs tracking-widest mb-6">Contact Us</h3>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-blue-500" />
+                <span>support@lobuy.com</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-blue-500" />
+                <span>+91 8606990014</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <MapPin className="w-4 h-4 text-blue-500" />
+                <span>india, kerala</span>
+              </li>
+            </ul>
+          </div>
         </div>
+
+        {/* 3. Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-xs text-gray-500">
+            © 2026 LOBUY Inc. All rights reserved.
+          </p>
+          
+          {/* Social Icons */}
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-blue-500 transition-colors"><Facebook className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-blue-500 transition-colors"><Instagram className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-blue-500 transition-colors"><Twitter className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-blue-500 transition-colors"><Github className="w-5 h-5" /></a>
+          </div>
+
+          {/* Payment Icons Placeholder */}
+          <div className="flex gap-2 grayscale opacity-50">
+            <div className="h-6 w-10 bg-white/20 rounded"></div>
+            <div className="h-6 w-10 bg-white/20 rounded"></div>
+            <div className="h-6 w-10 bg-white/20 rounded"></div>
+          </div>
+        </div>
+      </div>
     </footer>
-    
-        </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
