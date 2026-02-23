@@ -1,7 +1,8 @@
 
 import jwt from "../Services/jwt.js";
 export function UserCheckAuth(req, res, next) {
-  console.time("TOKEN_VERIFY"); // <-- START TIMER
+  console.time("TOKEN_VERIFY"); 
+console.log("come");
 
   const token = req.cookies.token;
 
@@ -14,7 +15,7 @@ export function UserCheckAuth(req, res, next) {
     const user = jwt.verifyToken(token);
     req.user = user;
     
-    console.timeEnd("TOKEN_VERIFY"); // <-- END TIMER
+    console.timeEnd("TOKEN_VERIFY"); 
     next();
   } catch (err) {
     console.timeEnd("TOKEN_VERIFY");
