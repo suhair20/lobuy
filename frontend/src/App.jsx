@@ -42,7 +42,6 @@ function App() {
   return (
     <div>
       <Toaster position="bottom-center" />
-      
       {showIntro ? <Intropage /> : <Outlet />}
     </div>
   );
