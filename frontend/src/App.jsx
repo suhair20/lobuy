@@ -8,40 +8,43 @@
   import { setauthenticated,logout } from "../slices/AuthSlice";
 
 
- function App() {
-  const dispatch = useDispatch();
-  
-  // 1. Get auth status
-  const { data, error, isLoading } = useCheckAuthQuery();
-  
-  // 2. ONLY fetch products once auth is determined (prevents network congestion)
-  useGetLatestProductsQuery(8, { skip: isLoading });
-
-  // 3. State for the intro
+function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [introMinTimeMet, setIntroMinTimeMet] = useState(false);
+  const dispatch = useDispatch();
+
+
+  const { data, error, isLoading: authLoading } = useCheckAuthQuery();
+  
+
+  useGetLatestProductsQuery(8, { skip: authLoading });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIntroMinTimeMet(true);
+    }, 6000); 
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   useEffect(() => {
     if (data) dispatch(setauthenticated(data.user));
     if (error) dispatch(logout());
   }, [data, error, dispatch]);
 
-  // 4. Auto-hide intro when data is ready OR after a fallback timer
   useEffect(() => {
-    if (!isLoading) {
-      // Small delay so the user actually sees the intro, but not 18 seconds!
-      const timer = setTimeout(() => setShowIntro(false), 2000); 
-      return () => clearTimeout(timer);
+    if (introMinTimeMet && !authLoading) {
+      setShowIntro(false);
     }
-  }, [isLoading]);
+  }, [introMinTimeMet, authLoading]);
 
   return (
     <div>
       <Toaster position="bottom-center" />
-      {/* Remove the Intropage from the DOM entirely when showIntro is false 
-          to free up GPU memory */}
+      
       {showIntro ? <Intropage /> : <Outlet />}
     </div>
   );
 }
-
   export default App
