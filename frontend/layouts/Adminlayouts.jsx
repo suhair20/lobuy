@@ -13,21 +13,18 @@ const AdminLayout = () => {
    
   const { data, error, isLoading } = useAdmincheckAuthQuery();
  
+useEffect(() => {
+  if (isLoading) return; // Wait until checkAuth finishes
 
-  useEffect(() => {
-    console.log("layout working", data);
+  if (data && data.user) {
+    dispatch(setAdminAuthenticated(data.user));
+  }
 
-    // ✅ SAFE CHECK
-    if (data && data.user) {
-      dispatch(setAdminAuthenticated(data.user));
-       
-    }
-
-    if (error) {
-      dispatch(adminLogout());
-      navigate("/admin/login", { replace: true });
-    }
-  }, [data, error, dispatch]);
+  if (!isLoading && error) {
+    dispatch(adminLogout());
+    navigate("/admin/login", { replace: true });
+  }
+}, [data, error, isLoading, dispatch]);
 
   
   if (isLoading) return null;

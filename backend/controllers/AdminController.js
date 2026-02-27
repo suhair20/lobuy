@@ -42,6 +42,7 @@ const token = jwt.genrateToken({
 
 export const checkAuth =async (req,res)=>{
   
+  console.log("heloocomadmin");
   
    return res.json({
     success: true,

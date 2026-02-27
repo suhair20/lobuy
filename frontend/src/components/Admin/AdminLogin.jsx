@@ -37,7 +37,7 @@ const handleLogin = async (e) => {
     dispatch(setAdminAuthenticated(data.user));
 
     
-    navigate("/admin");
+    navigate("/admin", { replace: true });
 
   } catch (err) {
     console.error("Login error:", err);
