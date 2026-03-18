@@ -4,7 +4,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 const BASE_URL =
   import.meta.env.DEV
     ? "http://localhost:5000"
-    : "http://13.60.245.94:5000";
+    : "https://api.lobuy.in";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
