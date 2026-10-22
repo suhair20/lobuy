@@ -1,0 +1,12 @@
+{
+  "name": "phonefix",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix lobuy run dev",
+    "dev:admin": "npm --prefix lobuy-admin run dev",
+    "build": "npm --prefix lobuy run build",
+    "build:admin": "npm --prefix lobuy-admin run build",
+    "start": "npm --prefix lobuy run start",
+    "start:admin": "npm --prefix lobuy-admin run start"
+  }
+}
