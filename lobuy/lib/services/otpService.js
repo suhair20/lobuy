@@ -3,12 +3,19 @@ import { Resend } from "resend";
 import OtpCode from "@/lib/models/otpCodeModel.js";
 import dbConnect from "@/lib/db";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const OTP_TTL_SEC = 300;
 const MAX_ATTEMPTS = 5;
 const normalize = (email) => String(email).trim().toLowerCase();
 const hash = (code) => crypto.createHash("sha256").update(String(code)).digest("hex");
+
+/** Lazy so `next build` does not crash when RESEND_API_KEY is missing at import time. */
+function getResend() {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
+    throw new Error("RESEND_API_KEY is not set. Add it in Vercel → Environment Variables.");
+  }
+  return new Resend(key);
+}
 
 export const otpService = {
   async generateOtp(email) {
@@ -31,22 +38,32 @@ export const otpService = {
   async sendOtp(email) {
     const otp = await this.generateOtp(email);
 
-    const { error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || "Lobuy <onboarding@resend.dev>",
-      to: normalize(email),
-      subject: "Your Lobuy verification code",
-      html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.4;">
-          <h2>Verify your email</h2>
-          <p>Your Lobuy verification code is:</p>
-          <h1 style="letter-spacing: 4px;">${otp}</h1>
-          <p>This code is valid for 5 minutes. If you didn't request it, you can ignore this email.</p>
-        </div>
-      `,
-    });
-    if (error) {
-      console.error("[otp] email failed", error);
-      if (process.env.NODE_ENV !== "production") console.info(`[otp] dev code for ${email}: ${otp}`);
+    try {
+      const { error } = await getResend().emails.send({
+        from: process.env.EMAIL_FROM || "Lobuy <onboarding@resend.dev>",
+        to: normalize(email),
+        subject: "Your Lobuy verification code",
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.4;">
+            <h2>Verify your email</h2>
+            <p>Your Lobuy verification code is:</p>
+            <h1 style="letter-spacing: 4px;">${otp}</h1>
+            <p>This code is valid for 5 minutes. If you didn't request it, you can ignore this email.</p>
+          </div>
+        `,
+      });
+      if (error) {
+        console.error("[otp] email failed", error);
+        if (process.env.NODE_ENV !== "production") {
+          console.info(`[otp] dev code for ${email}: ${otp}`);
+        }
+      }
+    } catch (err) {
+      console.error("[otp] send error", err);
+      if (process.env.NODE_ENV !== "production") {
+        console.info(`[otp] dev code for ${email}: ${otp}`);
+      }
+      throw err;
     }
   },
 
