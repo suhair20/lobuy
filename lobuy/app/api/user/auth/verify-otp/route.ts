@@ -7,6 +7,8 @@ import { clientIp, rateLimit, tooManyRequests } from "@/lib/services/rateLimit";
 import { sessionCookieOptions } from "@/lib/security";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}));

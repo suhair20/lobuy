@@ -3,6 +3,8 @@ import dbConnect from "@/lib/db";
 import Category from "@/lib/models/CategoryModel.js";
 import Product from "@/lib/models/product.Model.js";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Dev helper: seeds sample categories/products if the DB is empty.
  * GET /api/user/seed

@@ -5,6 +5,8 @@ import Address from "@/lib/models/Address.js";
 import dbConnect from "@/lib/db";
 import { OrderError, validateAddress } from "@/lib/services/orderService";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import Category from "@/lib/models/CategoryModel.js";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();

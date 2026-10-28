@@ -4,6 +4,8 @@ import Jwt from "@/lib/services/jwt.js";
 import User from "@/lib/models/userModel.js";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();

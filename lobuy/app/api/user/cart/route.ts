@@ -5,6 +5,8 @@ import Cart from "@/lib/models/cartModel.js";
 import Product from "@/lib/models/product.Model.js";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();

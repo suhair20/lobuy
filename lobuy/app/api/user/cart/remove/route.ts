@@ -4,6 +4,8 @@ import Jwt from "@/lib/services/jwt.js";
 import Cart from "@/lib/models/cartModel.js";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function DELETE(req: Request, { params }: { params: { productId?: string } }) {
   try {
     await dbConnect();

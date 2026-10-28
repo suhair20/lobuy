@@ -5,6 +5,8 @@ import Product from "@/lib/models/product.Model.js";
 import dbConnect from "@/lib/db";
 import { currentUserId, MAX_QTY_PER_ITEM } from "@/lib/services/orderService";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     await dbConnect();

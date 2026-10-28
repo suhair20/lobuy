@@ -9,6 +9,8 @@ import {
   resolveAddress,
 } from "@/lib/services/orderService";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await dbConnect();

@@ -4,6 +4,8 @@ import { otpService } from "@/lib/services/otpService.js";
 import { clientIp, rateLimit, tooManyRequests } from "@/lib/services/rateLimit";
 import dbConnect from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function POST(req: Request) {

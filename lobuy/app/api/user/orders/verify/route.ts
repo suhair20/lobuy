@@ -10,6 +10,8 @@ import {
   signaturesMatch,
 } from "@/lib/services/orderService";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     await dbConnect();
